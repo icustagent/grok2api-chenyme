@@ -17,9 +17,9 @@ services:
       # CF_REFRESH_INTERVAL: "600"
       # CF_TIMEOUT: "60"
 
-      # SERVER_STORAGE_TYPE: (local, redis, mysql, pgsql) default: local
-      # SERVER_STORAGE_URL: (local mode is empty) default: empty
-      #   Redis: redis://localhost:6379/0 or redis://:password@localhost:6379/0
+      SERVER_STORAGE_TYPE: (local, redis, mysql, pgsql) default: local
+      SERVER_STORAGE_URL: #(local mode is empty) default: empty
+      Redis: redis://localhost:6379/0
       #   MySQL: mysql+aiomysql://user:pass@localhost/db
       #   PgSQL: postgresql+asyncpg://user:pass@localhost/db
     command:
