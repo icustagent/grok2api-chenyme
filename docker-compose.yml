@@ -34,12 +34,6 @@ services:
     networks:
       - grok2api
       - apinetwork
-
-networks:
-  grok2api:
-    name: grok2api
-  apinetwork:
-    name: apinetwork
   # 如果出口 IP 不干净，可取消以下注释使用 Warp 作为落地代理
   # 启用后将 proxy.base_proxy_url 设为 socks5://warp:1080
   # warp:
@@ -63,3 +57,11 @@ networks:
       TZ: Asia/Hong_Kong
       LOG_LEVEL: info
     restart: unless-stopped
+    networks:
+      - grok2api
+
+networks:
+  grok2api:
+    name: grok2api
+  apinetwork:
+    name: apinetwork
