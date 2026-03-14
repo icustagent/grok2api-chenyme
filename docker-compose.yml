@@ -16,9 +16,9 @@ services:
       SERVER_WORKERS: ${SERVER_WORKERS:-1}
       SERVER_STORAGE_TYPE: ${SERVER_STORAGE_TYPE:-pgsql}
       SERVER_STORAGE_URL: ${SERVER_STORAGE_URL}
-      FLARESOLVERR_URL: http://flaresolverr:8191
-      CF_REFRESH_INTERVAL: "600"
-      CF_TIMEOUT: "60"
+      FLARESOLVERR_URL: ${FLARESOLVERR_URL:-http://flaresolverr:8191}
+      CF_REFRESH_INTERVAL: ${CF_REFRESH_INTERVAL:-600}
+      CF_TIMEOUT: ${CF_TIMEOUT:-60}
     command:
       - sh
       - -c
@@ -43,6 +43,7 @@ services:
       POSTGRES_USER: grok
       POSTGRES_PASSWORD: grokpass
       POSTGRES_DB: grok2api
+      PGDATA: /var/lib/postgresql/data/data
     volumes:
       - ./postgres_data:/var/lib/postgresql/data
     healthcheck:
@@ -50,6 +51,7 @@ services:
       interval: 5s
       timeout: 5s
       retries: 10
+      start_period: 10s
     restart: unless-stopped
     networks:
       - grok2api
