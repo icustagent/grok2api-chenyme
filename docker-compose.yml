@@ -46,7 +46,7 @@ services:
       POSTGRES_DB: ${POSTGRES_DB:-grok2api}
       PGDATA: /var/lib/postgresql/data/pgdata
     volumes:
-      - ./postgres_data:/var/lib/postgresql/data
+      - pgdata:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-grok} -d ${POSTGRES_DB:-grok2api}"]
       interval: 5s
@@ -74,3 +74,7 @@ networks:
     name: grok2api
   apinetwork:
     name: apinetwork
+
+volumes:
+  pgdata:
+    name: grok2api-pgdata
