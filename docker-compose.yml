@@ -10,9 +10,8 @@ services:
       SERVER_HOST: ${SERVER_HOST:-0.0.0.0}
       SERVER_PORT: ${SERVER_PORT:-8000}
       SERVER_WORKERS: ${SERVER_WORKERS:-1}
-      SERVER_STORAGE_TYPE: pgsql
-      SERVER_STORAGE_URL: postgresql+asyncpg://grok:grokpass@postgres:5432/grok2api
-
+      SERVER_STORAGE_TYPE: ${SERVER_STORAGE_TYPE}
+      SERVER_STORAGE_URL: ${SERVER_STORAGE_URL}
       FLARESOLVERR_URL: http://flaresolverr:8191
       CF_REFRESH_INTERVAL: "600"
       CF_TIMEOUT: "60"
