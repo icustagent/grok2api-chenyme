@@ -2,15 +2,19 @@ services:
   grok2api:
     container_name: grok2api
     image: ghcr.io/chenyme/grok2api:latest
+    env_file:
+      - .env
     ports:
       - "${HOST_PORT:-8000}:${SERVER_PORT:-8000}"
     environment:
       TZ: Asia/Hong_Kong
       LOG_LEVEL: ${LOG_LEVEL:-INFO}
+      LOG_FILE_ENABLED: ${LOG_FILE_ENABLED:-false}
+      DATA_DIR: ${DATA_DIR:-/app/data}
       SERVER_HOST: ${SERVER_HOST:-0.0.0.0}
       SERVER_PORT: ${SERVER_PORT:-8000}
       SERVER_WORKERS: ${SERVER_WORKERS:-1}
-      SERVER_STORAGE_TYPE: ${SERVER_STORAGE_TYPE}
+      SERVER_STORAGE_TYPE: ${SERVER_STORAGE_TYPE:-pgsql}
       SERVER_STORAGE_URL: ${SERVER_STORAGE_URL}
       FLARESOLVERR_URL: http://flaresolverr:8191
       CF_REFRESH_INTERVAL: "600"
