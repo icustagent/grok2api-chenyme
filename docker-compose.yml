@@ -7,7 +7,7 @@ services:
     ports:
       - "${HOST_PORT:-8000}:${SERVER_PORT:-8000}"
     environment:
-      TZ: Asia/Hong_Kong
+      TZ: ${TZ:-Asia/Hong_Kong}
       LOG_LEVEL: ${LOG_LEVEL:-INFO}
       LOG_FILE_ENABLED: ${LOG_FILE_ENABLED:-false}
       DATA_DIR: ${DATA_DIR:-/app/data}
@@ -27,7 +27,6 @@ services:
         --port "$${SERVER_PORT:-8000}" --workers "$${SERVER_WORKERS:-1}" main:app
     volumes:
       - ./data:/app/data
-      - ./logs:/app/logs
     restart: unless-stopped
     depends_on:
       postgres:
@@ -39,19 +38,21 @@ services:
   postgres:
     container_name: grok2api-postgres
     image: postgres:17-alpine
+    env_file:
+      - .env
     environment:
-      POSTGRES_USER: grok
-      POSTGRES_PASSWORD: grokpass
-      POSTGRES_DB: grok2api
-      PGDATA: /var/lib/postgresql/data/data
+      POSTGRES_USER: ${POSTGRES_USER:-grok}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-grokpass}
+      POSTGRES_DB: ${POSTGRES_DB:-grok2api}
+      PGDATA: /var/lib/postgresql/data/pgdata
     volumes:
       - ./postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U grok -d grok2api"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-grok} -d ${POSTGRES_DB:-grok2api}"]
       interval: 5s
       timeout: 5s
-      retries: 10
-      start_period: 10s
+      retries: 20
+      start_period: 15s
     restart: unless-stopped
     networks:
       - grok2api
@@ -62,7 +63,7 @@ services:
     ports:
       - "127.0.0.1:8191:8191"
     environment:
-      TZ: Asia/Hong_Kong
+      TZ: ${TZ:-Asia/Hong_Kong}
       LOG_LEVEL: info
     restart: unless-stopped
     networks:
